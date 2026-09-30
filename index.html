@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Devoluções — Vix Log</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icones/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icones/favicon-16.png">
+<link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
+<style>
+  html,body{margin:0;height:100%;background:#000;font-family:"Segoe UI",Roboto,Arial,sans-serif;overflow:hidden}
+  #app{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#EEF1F5}
+  .cover{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:#000;z-index:5;text-align:center;padding:24px;transition:opacity .3s;color:#fff}
+  .cover img{width:260px;max-width:72vw}
+  .cover p{margin:0;color:#B9C0CC;font-size:15px;line-height:1.5}
+  .cover b{color:#fff}
+  .spin{width:34px;height:34px;border:4px solid #1c2530;border-top-color:#0A6BFA;border-radius:50%;animation:g .9s linear infinite}
+  @keyframes g{to{transform:rotate(360deg)}}
+  .hide{opacity:0;pointer-events:none}
+  #off{display:none;position:fixed;left:0;right:0;top:0;z-index:6;background:#C62F28;color:#fff;font-weight:700;text-align:center;padding:8px;padding-top:calc(8px + env(safe-area-inset-top,0px));font-size:14px}
+  #off.on{display:block}
+  .btn{margin-top:6px;border:0;background:#0A6BFA;color:#fff;font-weight:700;padding:12px 22px;border-radius:10px;font-size:16px}
+</style>
+</head>
+<body>
+<!--
+  Endereço do app = URL da implantação do Apps Script (termina em /exec).
+  Só precisa trocar aqui se um dia você criar uma implantação NOVA
+  (publicar "Nova versão" na mesma implantação mantém o mesmo endereço).
+-->
+<script>
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbwdaaYCF8Z7z2tdX16G6H9N6VgZQQG0uvCKvKsj3UdOL6pK6nfpbqD7pe-5vS5XXoKm/exec';
+</script>
+
+<div class="cover" id="cover">
+  <img src="icones/logo.png" alt="Vix Log — Operador Logístico">
+  <div class="spin" id="spin"></div>
+  <p id="msg">Abrindo as <b>Devoluções</b>…</p>
+</div>
+<div id="off">Sem conexão com a internet — o registro em andamento fica guardado neste aparelho.</div>
+<iframe id="app" title="Devoluções — Vix Log" allow="camera; autoplay; clipboard-read; clipboard-write; screen-wake-lock"></iframe>
+
+<script>
+  const fr = document.getElementById('app'), cover = document.getElementById('cover');
+  let carregou = false;
+  function abrir(){
+    if (APP_URL.indexOf('https://') !== 0) {
+      document.getElementById('spin').style.display = 'none';
+      document.getElementById('msg').innerHTML = 'Falta configurar o endereço do app.<br>Edite o <b>index.html</b> e cole a URL do Apps Script em <b>APP_URL</b>.';
+      return;
+    }
+    carregou = false;
+    document.getElementById('spin').style.display = '';
+    document.getElementById('msg').innerHTML = 'Abrindo as <b>Devoluções</b>…';
+    cover.classList.remove('hide');
+    fr.src = APP_URL + (APP_URL.indexOf('?') > -1 ? '&' : '?') + 't=' + Date.now();
+    setTimeout(() => { if (!carregou && navigator.onLine) pronto(); }, 6000);   // garantia: libera após 6 s
+    setTimeout(() => { if (!carregou) falhou(); }, 25000);
+  }
+  function falhou(){
+    if (navigator.onLine && carregou) return;
+    document.getElementById('spin').style.display = 'none';
+    document.getElementById('msg').innerHTML = 'Não foi possível abrir o app.<br>Verifique a conexão com a internet.<br><button class="btn" onclick="abrir()">Tentar de novo</button>';
+    cover.classList.remove('hide');
+  }
+  function pronto(){
+    if (carregou) return;
+    carregou = true;
+    cover.classList.add('hide');
+    try { fr.focus(); } catch (e) {}
+  }
+  // 1) o app avisa quando está pronto
+  window.addEventListener('message', e => { if (e.data && e.data.app === 'devolucao-vixlog' && e.data.pronto) pronto(); });
+  // 2) evento de carregamento do navegador
+  fr.addEventListener('load', () => { setTimeout(pronto, 1500); });
+  // 3) um toque na tela de abertura também libera
+  cover.addEventListener('click', () => { if (navigator.onLine && APP_URL.indexOf('https://') === 0) pronto(); });
+  // mantém o foco no app (para o leitor de código de barras do coletor)
+  window.addEventListener('focus', () => { try { fr.focus(); } catch (e) {} });
+
+  // aviso de conexão
+  const off = document.getElementById('off');
+  const st = () => off.classList.toggle('on', !navigator.onLine);
+  window.addEventListener('online', st); window.addEventListener('offline', st); st();
+
+  // mantém a tela ligada durante o uso (quando o aparelho permite)
+  let wl = null;
+  async function tela(){ try { if ('wakeLock' in navigator && document.visibilityState === 'visible') wl = await navigator.wakeLock.request('screen'); } catch (e) {} }
+  document.addEventListener('visibilitychange', tela); tela();
+
+  // instalação como app
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+  abrir();
+</script>
+</body>
+</html>
