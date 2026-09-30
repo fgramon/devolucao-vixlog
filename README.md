@@ -41,6 +41,6 @@ Abra o endereço do GitHub Pages no Chrome do coletor/tablet → menu ⋮ → **
 Depois de mudar o código no Apps Script: **Implantar → Gerenciar implantações → editar → Nova versão**. A URL não muda.
 
 ## Observações
-- Itens (EAN/DUN): ligue "Conferir itens" ao abrir a devolução; cada bipe soma 1 na quantidade; lote, validade e avariadas são opcionais. Vão para o PDF e para a aba **Itens** da planilha.
+- Itens: ligue "Conferir itens" ao abrir a devolução. Bipe o **DUN** (caixa): na primeira vez o app pede as unidades por caixa e o EAN da unidade, e grava na aba **Produtos** da planilha (os outros coletores passam a reconhecer). Para caixa aberta, marque "Caixa fracionada" e bipe o **EAN** de cada unidade. Lote, validade e avariadas são opcionais. Tudo vai para o PDF e para a aba **Itens**.
 - Chave da DANFE: 44 dígitos, validada pelo dígito verificador; aceita o leitor do coletor (teclado) ou a câmera (depende do aparelho).
 - Rascunhos ficam salvos no aparelho; se a internet cair no envio, o dossiê fica pendente e pode ser reenviado.
