@@ -1,6 +1,6 @@
 # Devoluções — Vix Log
 
-App de recebimento de devoluções para coletores Bluebird e tablets: escolhe o cliente, bipa a chave da DANFE, registra cada volume (estado da embalagem, checklist, fotos) e gera o **dossiê da devolução em PDF** para enviar ao cliente.
+App de recebimento de devoluções para coletores Bluebird e tablets: escolhe o cliente, bipa a chave da DANFE, registra cada volume (estado da embalagem, checklist, fotos) e gera o **relatório da devolução em PDF** para enviar ao cliente.
 
 Funciona como atalho (PWA): este repositório é só a "casca" (GitHub Pages) que abre o app hospedado no Google Apps Script.
 
@@ -43,4 +43,4 @@ Depois de mudar o código no Apps Script: **Implantar → Gerenciar implantaçõ
 ## Observações
 - Itens: ligue "Conferir itens" ao abrir a devolução. Bipe o **DUN** (caixa): na primeira vez o app pede as unidades por caixa e o EAN da unidade, e grava na aba **Produtos** da planilha (os outros coletores passam a reconhecer). Para caixa aberta, marque "Caixa fracionada" e bipe o **EAN** de cada unidade. Lote, validade e avariadas são opcionais. Tudo vai para o PDF e para a aba **Itens**.
 - Chave da DANFE: 44 dígitos, validada pelo dígito verificador; aceita o leitor do coletor (teclado) ou a câmera (depende do aparelho).
-- Rascunhos ficam salvos no aparelho; se a internet cair no envio, o dossiê fica pendente e pode ser reenviado.
+- Rascunhos ficam salvos no aparelho; se a internet cair no envio, o relatório fica pendente e pode ser reenviado.
