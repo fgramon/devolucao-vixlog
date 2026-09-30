@@ -41,5 +41,6 @@ Abra o endereço do GitHub Pages no Chrome do coletor/tablet → menu ⋮ → **
 Depois de mudar o código no Apps Script: **Implantar → Gerenciar implantações → editar → Nova versão**. A URL não muda.
 
 ## Observações
+- Itens (EAN/DUN): ligue "Conferir itens" ao abrir a devolução; cada bipe soma 1 na quantidade; lote, validade e avariadas são opcionais. Vão para o PDF e para a aba **Itens** da planilha.
 - Chave da DANFE: 44 dígitos, validada pelo dígito verificador; aceita o leitor do coletor (teclado) ou a câmera (depende do aparelho).
 - Rascunhos ficam salvos no aparelho; se a internet cair no envio, o dossiê fica pendente e pode ser reenviado.
