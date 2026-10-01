@@ -7,12 +7,14 @@ Funciona como atalho (PWA): este repositório é só a "casca" (GitHub Pages) qu
 ## Arquivos deste repositório
 - `index.html` — tela de abertura + app em tela cheia (precisa da `APP_URL`)
 - `manifest.json`, `sw.js`, `icones/` — instalação como atalho, ícones da marca
+- `manual/Manual-Devolucoes-VixLog.pdf` — manual de uso para os conferentes (a primeira página traz o QR code de instalação)
+- `manual/qr.png` — QR code do endereço do app (`https://vixloglogistica.github.io/devolucao-vixlog/`)
 
 ## Publicação (passo a passo)
 
 ### 1. GitHub Pages
 1. Repositório público `devolucao-vixlog` → **Settings → Pages → Deploy from a branch → `main` / root**.
-2. Endereço final: `https://fgramon.github.io/devolucao-vixlog/`
+2. Endereço final: `https://vixloglogistica.github.io/devolucao-vixlog/`
 
 ### 2. Apps Script (o app de verdade)
 1. Em <https://script.google.com> → **Novo projeto** → nome "Devoluções Vix Log".
@@ -25,7 +27,7 @@ Funciona como atalho (PWA): este repositório é só a "casca" (GitHub Pages) qu
 No `index.html`, troque `COLE_AQUI_A_URL_DO_APPS_SCRIPT` pela URL `/exec` e faça commit.
 
 ### 4. Instalar nos aparelhos
-Abra o endereço do GitHub Pages no Chrome do coletor/tablet → menu ⋮ → **Adicionar à tela inicial**.
+Leia o QR code do manual (`manual/qr.png`) com a câmera, ou abra `vixloglogistica.github.io/devolucao-vixlog` no Chrome do coletor/tablet → menu ⋮ → **Adicionar à tela inicial**. O passo a passo para os conferentes está em `manual/Manual-Devolucoes-VixLog.pdf`.
 
 ## Como os dados são guardados
 - PDF: `Devoluções Vix Log / <Cliente> / <AAAA-MM> / <protocolo> - <Cliente>.pdf`
